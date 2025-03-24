@@ -1,0 +1,14 @@
+mat-card-title,
+mat-card-header,
+mat-card-content,
+mat-select,
+mat-option {
+    font-family: "Gulzar", serif;
+    font-weight: 400;
+    font-style: normal;
+    letter-spacing: 0px;
+}
+
+.new-training {
+    padding: 30px;
+}
