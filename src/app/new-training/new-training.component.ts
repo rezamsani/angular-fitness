@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { FlexLayoutModule } from 'ngx-flexible-layout';
 import { CommonModule } from '@angular/common';
@@ -12,5 +12,9 @@ import { MaterialModule } from '../material.module';
   styleUrl: './new-training.component.css'
 })
 export class NewTrainingComponent {
+  @Output() trainingStart = new EventEmitter<void>();
 
+  onStartTraining(){
+    this.trainingStart.emit();
+  }
 }
