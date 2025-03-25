@@ -2,7 +2,7 @@
     <mat-progress-spinner [value]="progress"></mat-progress-spinner>
     <h1>{{progress}} %</h1>
     <p>ادامه بده تو میتونی</p>
-    <button mat-raised-button style="background-color: #ff4081;">توقف</button>
+    <button mat-raised-button (click)="onStop()" style="background-color: #ff4081;">توقف</button>
 </section>
 
 

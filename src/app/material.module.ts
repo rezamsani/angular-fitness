@@ -18,6 +18,7 @@ import {MatCardModule} from '@angular/material/card';
 import {MatSelectModule} from '@angular/material/select';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {MatDialogModule} from '@angular/material/dialog';
 
 @NgModule({
 
@@ -25,14 +26,14 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
         MatIcon, MatFormFieldModule, MatInputModule,
         MatDatepickerModule, MatNativeDateModule, MatCheckboxModule,
         MatSidenavModule, MatToolbarModule, MatIconModule, MatListModule, MatTabsModule, MatCardModule,
-        MatSelectModule,MatProgressBarModule, MatProgressSpinnerModule
+        MatSelectModule,MatProgressBarModule, MatProgressSpinnerModule, MatDialogModule
 
     ],
     exports: [MatSlideToggleModule, MatButtonModule,
         MatIcon, MatFormFieldModule, MatInputModule,
         MatDatepickerModule, MatNativeDateModule, MatCheckboxModule,
         MatSidenavModule, MatToolbarModule, MatIconModule,MatListModule, MatTabsModule, MatCardModule,
-        MatSelectModule,MatProgressBarModule, MatProgressSpinnerModule
+        MatSelectModule,MatProgressBarModule, MatProgressSpinnerModule, MatDialogModule
 
     ]
 
