@@ -9,9 +9,10 @@
     <div>لوگو نرم افزار </div>
     <div fxFlex fxLayout fxLayoutAlign="flex-end" fxHide.xs>
         <ul fxLayout fxLayoutGap="10px" class="navigation-items">
-          <li><a mat-icon-button routerLink="/signup"> <mat-icon>person_add</mat-icon>  </a></li>
-          <li><a mat-icon-button routerLink="/login"><mat-icon>login</mat-icon></a></li>
-          <li><a mat-icon-button  routerLink="/training"><mat-icon>home</mat-icon></a></li>                  
+          <li *ngIf="!isAuth"><a mat-icon-button routerLink="/signup"> <mat-icon>person_add</mat-icon>  </a></li>
+          <li *ngIf="!isAuth"><a mat-icon-button routerLink="/login"><mat-icon>login</mat-icon></a></li>
+          <li *ngIf="isAuth"><a mat-icon-button  routerLink="/training"><mat-icon>home</mat-icon></a></li>                  
+          <li *ngIf="isAuth"><a mat-icon-button routerLink="/logout"><mat-icon>logout</mat-icon></a></li>
         </ul>
       </div>         
 </mat-toolbar>
