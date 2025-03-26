@@ -45,4 +45,8 @@ export class TrainingService {
         this.excerciseChanged.next(null);
         console.log(this.exercises);
     }
+    getCompleteOrCancelExercise(): Exercise[] {
+        console.log("this.exercises " + this.exercises);
+        return this.exercises ? [...this.exercises] : []; // اگر مقدار null بود، یک آرایه خالی بده
+      }
 }

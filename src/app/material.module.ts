@@ -19,6 +19,7 @@ import {MatSelectModule} from '@angular/material/select';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatDialogModule} from '@angular/material/dialog';
+import {MatTableModule} from '@angular/material/table';
 
 @NgModule({
 
@@ -26,14 +27,14 @@ import {MatDialogModule} from '@angular/material/dialog';
         MatIcon, MatFormFieldModule, MatInputModule,
         MatDatepickerModule, MatNativeDateModule, MatCheckboxModule,
         MatSidenavModule, MatToolbarModule, MatIconModule, MatListModule, MatTabsModule, MatCardModule,
-        MatSelectModule,MatProgressBarModule, MatProgressSpinnerModule, MatDialogModule
+        MatSelectModule,MatProgressBarModule, MatProgressSpinnerModule, MatDialogModule,MatTableModule
 
     ],
     exports: [MatSlideToggleModule, MatButtonModule,
         MatIcon, MatFormFieldModule, MatInputModule,
         MatDatepickerModule, MatNativeDateModule, MatCheckboxModule,
         MatSidenavModule, MatToolbarModule, MatIconModule,MatListModule, MatTabsModule, MatCardModule,
-        MatSelectModule,MatProgressBarModule, MatProgressSpinnerModule, MatDialogModule
+        MatSelectModule,MatProgressBarModule, MatProgressSpinnerModule, MatDialogModule,MatTableModule
 
     ]
 
