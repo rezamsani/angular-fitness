@@ -10,12 +10,16 @@ import { PersianDatePipe } from "../persian-date.pipe";
 import { TranslationPipe } from "../translation.pipe";
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
-import { MatPaginator } from '@angular/material/paginator';
+import { MatPaginator, MatPaginatorIntl } from '@angular/material/paginator';
+import { PersianPaginatorIntl } from '../pagination.translate';
 
 @Component({
   selector: 'app-past-training',
   imports: [CommonModule, MaterialModule, FlexLayoutModule, FlexLayoutServerModule, FormsModule, PersianDatePipe, TranslationPipe],
-  templateUrl: './past-training.component.html',
+  providers: [
+    { provide: MatPaginatorIntl, useClass: PersianPaginatorIntl }
+  ],
+  templateUrl: './past-training.component.html',  
   styleUrl: './past-training.component.css'
 })
 export class PastTrainingComponent implements OnInit, AfterViewInit {
