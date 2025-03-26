@@ -1,3 +1,9 @@
-td, th {
+td,
+th {
     text-align: right;
-    direction: rtl;}
+    direction: rtl;
+}
+
+.input-wrapper{
+    padding-top: 12px;
+}

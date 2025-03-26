@@ -19,14 +19,18 @@ import { MatSort } from '@angular/material/sort';
 })
 export class PastTrainingComponent implements OnInit, AfterViewInit {
   displayedColumns: string[] = ['name', 'duration', 'calories', 'date', 'state'];
-  dataSource=new MatTableDataSource<Exercise>;
+  dataSource = new MatTableDataSource<Exercise>;
   @ViewChild(MatSort) sort: MatSort;
-  constructor(private trainingService: TrainingService) {}
+  constructor(private trainingService: TrainingService) { }
   ngAfterViewInit(): void {
     this.dataSource.sort = this.sort;
   }
 
   ngOnInit(): void {
     this.dataSource.data = this.trainingService.getCompleteOrCancelExercise();
+  }
+  applyFilter(event: KeyboardEvent) {
+    const filterValue = (event.target as HTMLInputElement)?.value ?? "";
+    this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 }
