@@ -6,10 +6,12 @@ import { FlexLayoutServerModule } from 'ngx-flexible-layout/server';
 import { MaterialModule } from '../material.module';
 import { TrainingService } from '../training/training.service';
 import { Exercise } from '../training/exercise.model';
+import { PersianDatePipe } from "../persian-date.pipe";
+import { TranslationPipe } from "../translation.pipe";
 
 @Component({
   selector: 'app-past-training',
-  imports: [CommonModule, MaterialModule, FlexLayoutModule, FlexLayoutServerModule, FormsModule],
+  imports: [CommonModule, MaterialModule, FlexLayoutModule, FlexLayoutServerModule, FormsModule, PersianDatePipe, TranslationPipe],
   templateUrl: './past-training.component.html',
   styleUrl: './past-training.component.css'
 })
