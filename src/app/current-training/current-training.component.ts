@@ -1,4 +1,4 @@
-import { Component, OnInit,EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 
 import { FlexLayoutModule } from 'ngx-flexible-layout';
@@ -8,6 +8,8 @@ import { MaterialModule } from '../material.module';
 import { interval, Subscription } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { StopTrainingComponent } from './stop-training/stop-training.component';
+import { TrainingService } from '../training/training.service';
+import { Exercise } from '../training/exercise.model';
 
 
 @Component({
@@ -24,10 +26,12 @@ import { StopTrainingComponent } from './stop-training/stop-training.component';
 })
 export class CurrentTrainingComponent implements OnInit {
   progress = 0;
+  
+  exercise: Exercise = { id: '', name: '', duration: 0, calories: 0 };
   private subscription: Subscription | null = null;
   @Output() dialogEvent = new EventEmitter<void>();
 
-  constructor(private dialog: MatDialog) {
+  constructor(private dialog: MatDialog, private trainingService: TrainingService) {
 
 
   }
@@ -39,11 +43,11 @@ export class CurrentTrainingComponent implements OnInit {
       this.subscription.unsubscribe();
       this.subscription = null;
     }
-  
+
     const dialogRef = this.dialog.open(StopTrainingComponent, {
       data: { progress: this.progress }
     });
-  
+
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         this.dialogEvent.emit(); // تمرین متوقف می‌شود
@@ -52,12 +56,24 @@ export class CurrentTrainingComponent implements OnInit {
       }
     });
   }
-  
+
   startOrResumeTraining(): void {
+    this.exercise = this.trainingService.getRunningExcercise() ?? { 
+      id: '', 
+      name: '', 
+      duration: 0, 
+      calories: 0 
+  };
+    if (!this.exercise) {
+        console.error("No running exercise found!");
+        return;
+    }    
+    
+    const increment = this.exercise.duration / 100 * 1000;    
     if (!this.subscription) { // ✅ فقط اگر قبلاً متوقف شده بود، اجرا شود
-      this.subscription = interval(1000).subscribe(() => {
+      this.subscription = interval(increment).subscribe(() => {
         if (this.progress < 100) {
-          this.progress += 10;
+          this.progress += 1;
         } else {
           this.subscription?.unsubscribe();
           this.subscription = null;
@@ -65,14 +81,14 @@ export class CurrentTrainingComponent implements OnInit {
       });
     }
   }
-  
+
 
 
   ngOnDestroy(): void {
     if (this.subscription) {
-      this.subscription.unsubscribe(); 
-      this.subscription = null;     
+      this.subscription.unsubscribe();
+      this.subscription = null;
     }
   }
-  
+
 }

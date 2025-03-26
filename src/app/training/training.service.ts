@@ -2,7 +2,7 @@ import { Subject } from "rxjs";
 import { Exercise } from "./exercise.model";
 
 export class TrainingService {
-  excerciseChanged = new Subject<Exercise>();
+    excerciseChanged = new Subject<Exercise>();
     private availableExercises: Exercise[] = [
         { id: 'crunches', name: 'کرانچ', duration: 30, calories: 8 },
         { id: 'squat', name: 'اسکوات', duration: 180, calories: 15 },
@@ -14,8 +14,17 @@ export class TrainingService {
     getAvailableExercises() {
         return this.availableExercises.slice();
     }
-    startExercise(selectedIdExercise: string) {
-        this.runningExercise = this.availableExercises.find((x) => x.id === selectedIdExercise)!;
-        this.excerciseChanged.next({...this.runningExercise});
+    startExercise(selectedIdExercise: string) {        
+        const selectedExercise = this.availableExercises.find((x) => x.id === selectedIdExercise);
+        if (!selectedExercise) {
+            console.error("Selected exercise not found!");
+            return;
+        }
+        this.runningExercise = selectedExercise;
+        this.excerciseChanged.next({ ...this.runningExercise });
+        
+    }
+    getRunningExcercise() {
+        return this.runningExercise ? { ...this.runningExercise } : null;
     }
 }
