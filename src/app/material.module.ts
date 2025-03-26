@@ -22,6 +22,7 @@ import {MatDialogModule} from '@angular/material/dialog';
 import {MatTableModule} from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import { MatSortModule } from '@angular/material/sort';
+import {MatPaginator, MatPaginatorModule} from '@angular/material/paginator';
 
 
 @NgModule({
@@ -31,7 +32,7 @@ import { MatSortModule } from '@angular/material/sort';
         MatDatepickerModule, MatNativeDateModule, MatCheckboxModule,
         MatSidenavModule, MatToolbarModule, MatIconModule, MatListModule, MatTabsModule, MatCardModule,
         MatSelectModule,MatProgressBarModule, MatProgressSpinnerModule, MatDialogModule,MatTableModule,
-        MatSort, MatSortModule
+        MatSort, MatSortModule, MatPaginator, MatPaginatorModule
 
 
     ],
@@ -40,7 +41,7 @@ import { MatSortModule } from '@angular/material/sort';
         MatDatepickerModule, MatNativeDateModule, MatCheckboxModule,
         MatSidenavModule, MatToolbarModule, MatIconModule,MatListModule, MatTabsModule, MatCardModule,
         MatSelectModule,MatProgressBarModule, MatProgressSpinnerModule, MatDialogModule,MatTableModule,
-        MatSort, MatSortModule
+        MatSort, MatSortModule, MatPaginator, MatPaginatorModule
 
     ]
 

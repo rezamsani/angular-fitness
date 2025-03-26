@@ -10,6 +10,7 @@ import { PersianDatePipe } from "../persian-date.pipe";
 import { TranslationPipe } from "../translation.pipe";
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
+import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-past-training',
@@ -21,11 +22,13 @@ export class PastTrainingComponent implements OnInit, AfterViewInit {
   displayedColumns: string[] = ['name', 'duration', 'calories', 'date', 'state'];
   dataSource = new MatTableDataSource<Exercise>;
   @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
   constructor(private trainingService: TrainingService) { }
   ngAfterViewInit(): void {
     this.dataSource.sort = this.sort;
+    this.dataSource.paginator = this.paginator;
   }
-
+  
   ngOnInit(): void {
     this.dataSource.data = this.trainingService.getCompleteOrCancelExercise();
   }
@@ -33,4 +36,11 @@ export class PastTrainingComponent implements OnInit, AfterViewInit {
     const filterValue = (event.target as HTMLInputElement)?.value ?? "";
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
+}
+
+export interface PeriodicElement {
+  name: string;
+  position: number;
+  weight: number;
+  symbol: string;
 }
