@@ -26,7 +26,7 @@ import { Exercise } from '../training/exercise.model';
 })
 export class CurrentTrainingComponent implements OnInit {
   progress = 0;
-  
+
   exercise: Exercise = { id: '', name: '', duration: 0, calories: 0 };
   private subscription: Subscription | null = null;
   @Output() dialogEvent = new EventEmitter<void>();
@@ -50,7 +50,7 @@ export class CurrentTrainingComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        this.dialogEvent.emit(); // تمرین متوقف می‌شود
+        this.trainingService.cancelExercise(this.progress);
       } else {
         this.startOrResumeTraining(); // ✅ حالا دوباره تمرین ادامه پیدا می‌کند
       }
@@ -58,23 +58,25 @@ export class CurrentTrainingComponent implements OnInit {
   }
 
   startOrResumeTraining(): void {
-    this.exercise = this.trainingService.getRunningExcercise() ?? { 
-      id: '', 
-      name: '', 
-      duration: 0, 
-      calories: 0 
-  };
+    this.exercise = this.trainingService.getRunningExcercise() ?? {
+      id: '',
+      name: '',
+      duration: 0,
+      calories: 0
+    };
     if (!this.exercise) {
-        console.error("No running exercise found!");
-        return;
-    }    
-    
-    const increment = this.exercise.duration / 100 * 1000;    
+      console.error("No running exercise found!");
+      return;
+    }
+
+    const increment = this.exercise.duration / 100 * 1000;
     if (!this.subscription) { // ✅ فقط اگر قبلاً متوقف شده بود، اجرا شود
       this.subscription = interval(increment).subscribe(() => {
         if (this.progress < 100) {
           this.progress += 1;
+
         } else {
+          this.trainingService.completeExercise();
           this.subscription?.unsubscribe();
           this.subscription = null;
         }
