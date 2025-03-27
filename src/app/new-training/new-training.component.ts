@@ -1,6 +1,5 @@
-import { Component, OnInit, inject } from '@angular/core';
-import { Firestore, collection, collectionData, collectionSnapshots } from '@angular/fire/firestore';
-import { Observable, map } from 'rxjs';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { FormsModule, NgForm } from '@angular/forms';
 import { FlexLayoutModule } from 'ngx-flexible-layout';
 import { CommonModule } from '@angular/common';
@@ -15,34 +14,21 @@ import { Exercise } from '../training/exercise.model';
   templateUrl: './new-training.component.html',
   styleUrl: './new-training.component.css'
 })
-export class NewTrainingComponent implements OnInit {
-  private firestore = inject(Firestore); // ✅ نسخه جدید با Standalone API
-
-  exercises: Observable<Exercise[]>; // ✅ مقدار قابل مشاهده برای استفاده در کامپوننت
+export class NewTrainingComponent implements OnInit, OnDestroy {
+  exercises: Exercise[];
+  exerciseSubscription: Subscription;
   constructor(private trainintService: TrainingService) {
 
 
   }
+  ngOnDestroy(): void {
+    this.exerciseSubscription.unsubscribe();
+  }
   ngOnInit(): void {
-    //this.exercises = this.trainintService.getAvailableExercises();
 
-    const exercisesCollection = collection(this.firestore, 'exercises');
-    this.exercises = collectionSnapshots(exercisesCollection).pipe(
-      map(docArray =>
-        docArray.map(doc => ({
-          id: doc.id, // `doc.id` مستقیم مقدار دارد
-          name: doc.data()['name'], // مقدار را مستقیم می‌خوانیم
-          duration: doc.data()['duration'],
-          calories: doc.data()['calories']
-        }))
-      )
-    );
-
-
-    // this.exercises$.subscribe(data => {
-    //   this.exercises$ = data;
-    // });
-
+    this.exerciseSubscription = this.trainintService.excercisesChanged
+      .subscribe(exercises => { this.exercises = exercises });
+    this.trainintService.fetchAvailableExercises();
   }
   onStartTraining(form: NgForm) {
     this.trainintService.startExercise(form.value.excercise);
