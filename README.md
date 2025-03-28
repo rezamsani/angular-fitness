@@ -57,3 +57,11 @@ Angular CLI does not come with an end-to-end testing framework by default. You c
 ## Additional Resources
 
 For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+
+## Firbase config
+https://console.firebase.google.com/project/fitness-tracker-462e1/firestore/databases/-default-/data/~2Fexercises~2FU7ujt5S9lvQZpYjCWHdb.
+
+https://console.firebase.google.com/project/fitness-tracker-462e1/firestore/databases/-default-/rules
+
+
+
