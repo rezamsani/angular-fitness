@@ -63,5 +63,7 @@ https://console.firebase.google.com/project/fitness-tracker-462e1/firestore/data
 
 https://console.firebase.google.com/project/fitness-tracker-462e1/firestore/databases/-default-/rules
 
+https://console.firebase.google.com/project/fitness-tracker-462e1/authentication/users
+
 
 
