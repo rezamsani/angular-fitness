@@ -16,6 +16,7 @@ import { AuthService } from './auth/auth.service';
 import { PermissionService } from './auth/auth.guard';
 import { TrainingService } from './training/training.service';
 import { environment } from '../enviroments/enviroment';
+import { UiService } from './shared/ui.service';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -33,6 +34,7 @@ export const appConfig: ApplicationConfig = {
     AuthService,
     PermissionService,
     TrainingService,
+    UiService
 
   ],  
 };

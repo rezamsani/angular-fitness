@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { MaterialModule } from '../../material.module';
 import { FlexLayoutModule } from 'ngx-flexible-layout';
@@ -9,7 +9,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { MaterialPersianDateAdapter, PERSIAN_DATE_FORMATS } from '../../persian-dateadapter';
 import { AuthService } from '../auth.service';
-
+import { UiService } from '../../shared/ui.service';
+import { Subscription } from 'rxjs';
 
 
 
@@ -28,10 +29,20 @@ import { AuthService } from '../auth.service';
   templateUrl: './signup.component.html',
   styleUrl: './signup.component.css'
 })
-export class SignupComponent {
+export class SignupComponent implements OnInit, OnDestroy {
+  isLoading: boolean = false;
+  loadigStateSub: Subscription;
+  constructor(private authService: AuthService, private uiService: UiService) {
 
-  constructor(private authService: AuthService) {
+  }
 
+  ngOnInit(): void {
+    this.loadigStateSub = this.uiService.loadingState.subscribe((isLoading) => {
+      this.isLoading = isLoading;
+    })
+  }
+  ngOnDestroy(): void {
+    this.loadigStateSub.unsubscribe()
   }
   email: string = '';
   onSubmit(form: NgForm) {

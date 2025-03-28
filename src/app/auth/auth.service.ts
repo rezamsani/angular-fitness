@@ -5,21 +5,26 @@ import { Subject } from "rxjs";
 import { AuthData } from "./auth.model";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { FirebaseError } from "firebase/app";
+import { UiService } from "../shared/ui.service";
 @Injectable()
 export class AuthService {
   authChange = new Subject<boolean>();
   private user: User | null = null;
+  private isAuthenticated = false;
 
   constructor(private router: Router, private auth: Auth,
-    private snackbar: MatSnackBar) { }
+    private snackbar: MatSnackBar, private uiService:UiService) { }
   async registerUser(authData: AuthData) {
+    this.uiService.loadingState.next(true);
     try {
       const userCredential = await createUserWithEmailAndPassword(
         this.auth, authData.email, authData.password);
       this.user = userCredential.user;
       console.log('User registered successfully!', userCredential.user);
-      this.successFulAuth();
+      this.uiService.loadingState.next(false);
+      this.successfullAuth();
     } catch (error: unknown) {
+      this.uiService.loadingState.next(false);
       let errorMessage = 'An unknown error occurred';
       if (error instanceof FirebaseError) {
         errorMessage = error.message ?? 'An error occurred';
@@ -27,14 +32,18 @@ export class AuthService {
       this.snackbar.open(errorMessage, 'Close', {
         duration: 3000,
       });
+      this.failfullAuth();
     }
   }
   async login(authData: AuthData) {
+    this.uiService.loadingState.next(true);
     try {
       const userCredential = await signInWithEmailAndPassword(this.auth, authData.email, authData.password);
       this.user = userCredential.user; // ذخیره اطلاعات کاربر از Firebase
-      this.successFulAuth();
+      this.uiService.loadingState.next(false);
+      this.successfullAuth();
     } catch (error: unknown) {
+      this.uiService.loadingState.next(false);
       let errorMessage = 'An unknown error occurred';
       if (error instanceof FirebaseError) {
         errorMessage = error.message ?? 'An error occurred';
@@ -42,6 +51,7 @@ export class AuthService {
       this.snackbar.open(errorMessage, 'Close', {
         duration: 3000,
       });
+      this.failfullAuth();
     }
   }
 
@@ -63,8 +73,15 @@ export class AuthService {
   isAuth() {
     return this.user != null;
   }
-  successFulAuth() {
+  private successfullAuth() {
+    this.isAuthenticated = true;
     this.authChange.next(true);
     this.router.navigate(['/training']);
+  }
+
+  private failfullAuth() {
+    this.isAuthenticated = false;
+    this.authChange.next(false);
+    this.router.navigate(['/signup']);
   }
 }
