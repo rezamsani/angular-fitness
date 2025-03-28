@@ -6,12 +6,13 @@ import { Observable, map, Subject } from 'rxjs';
 export class TrainingService {
     excerciseChanged = new Subject<Exercise | null>();
     excercisesChanged = new Subject<Exercise[]>();
+    finishedExChanged = new Subject<Exercise[]>();
     private availableExercises: Exercise[] = [];
     // { id: 'crunches', name: 'کرانچ', duration: 30, calories: 8 },
     // { id: 'squat', name: 'اسکوات', duration: 180, calories: 15 },
     // { id: 'side-lunges', name: 'لانچ اسکوات', duration: 120, calories: 18 },
     // { id: 'burpees', name: 'شنا', duration: 60, calories: 8 }
-   
+
     private exercisessss: Exercise[] = [];
     private runningExercise: Exercise | null;
     private firestore = inject(Firestore); // ✅ نسخه جدید با Standalone API
@@ -32,7 +33,6 @@ export class TrainingService {
             this.availableExercises = exercises;
             this.excercisesChanged.next([...this.availableExercises]);
         });
-        //return this.availableExercises.slice();
     }
     startExercise(selectedIdExercise: string) {
         const selectedExercise = this.availableExercises.find((x) => x.id === selectedIdExercise);
@@ -63,12 +63,15 @@ export class TrainingService {
         this.runningExercise = null;
         this.excerciseChanged.next(null);
     }
-    getCompleteOrCancelExercise() {
-        return this.exercises ? [...this.exercisessss] : []; // اگر مقدار null بود، یک آرایه خالی بده
+    fetchCompleteOrCancelExercise() {
+        const exercisesCollection = collection(this.firestore, 'finishedExercises');
+        collectionData(exercisesCollection, { idField: 'id' }).subscribe((exercises) => {
+            this.finishedExChanged.next([...exercises as Exercise[]]);
+        });
     }
     private async addDataToDatabase(exercise: Exercise) {
         const exercisesCollection = collection(this.firestore, 'finishedExercises'); // ✅ ایجاد رفرنس به کالکشن
         return await addDoc(exercisesCollection, exercise); // ✅ اضافه کردن داکیومنت به کالکشن
-      }
+    }
 
 }
