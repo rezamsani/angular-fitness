@@ -23,20 +23,27 @@ export class AuthService {
       console.error('Registration error:', error);
     }
   }
-  login(authData: AuthData) {
-    // this.user = {
-    //   email: authData.email,
-    //   userId: Math.round(Math.random() * 10000).toString(),
-    // };
-    this.successFulAuth();
+  async login(authData: AuthData) {
+    try {
+      const userCredential = await signInWithEmailAndPassword(this.auth, authData.email, authData.password);
+      this.user = userCredential.user; // ذخیره اطلاعات کاربر از Firebase
+      this.successFulAuth();
+    } catch (error) {
+      console.error('Login error:', error);
+    }
   }
+  
 
-  logout() {
-    this.user = null;
-    this.authChange.next(false);
-    this.router.navigate(['/login']);
+  async logout() {
+    try {
+      await signOut(this.auth);
+      this.user = null;
+      this.authChange.next(false);
+      this.router.navigate(['/login']);
+    } catch (error) {
+      console.error('Logout error:', error);
+    }
   }
-
   getUser() {
     return { ...this.user };
   }
